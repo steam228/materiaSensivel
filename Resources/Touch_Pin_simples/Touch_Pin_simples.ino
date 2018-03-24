@@ -10,6 +10,10 @@
 #define ledPin 13 //connect a led to (+) pin5 (-) gnd
 int valorToque = 0;
 
+boolean Status = false;
+int prevVal = 0;
+int treshold = 3; //inserir aqui valor acima do qual queremos que seja activado
+
 
 void setup() {
 
@@ -21,30 +25,32 @@ void setup() {
 
 void loop() {
 
-  valorToque = readCapacitivePin(4);
-  Serial.println(valorToque);
+  valorToque = leOToque(4);
 
-  if (valorToque > 3) {
 
-    digitalWrite(ledPin, HIGH);
+  if (valorToque >= treshold && prevVal < treshold){
+    Status = !Status;
   }
 
-  else {
+  prevVal = valorToque;
 
 
-    digitalWrite(ledPin, LOW);
+  digitalWrite(ledPin, Status);
 
-  }
+  Serial.print(valorToque);
+  Serial.print("    -----     ");
+  Serial.println(Status);
 
+  
 
-  delay(1);
-
-
-
+  delay(10);
 
 }
 
-uint8_t readCapacitivePin(int pinToMeasure) {
+
+
+
+uint8_t leOToque(int pinToMeasure) {
   // Variables used to translate from Arduino to AVR pin naming
   volatile uint8_t* port;
   volatile uint8_t* ddr;
