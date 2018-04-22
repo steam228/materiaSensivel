@@ -69,10 +69,8 @@
     if (inString != null) {
       // trim off any whitespace:
       inString = trim(inString);
-      String Values = inString.readStringUntil(',,');
-      Values = trim(Values);
       // convert to an int and map to the screen height:
-      inByte = float(Values);
+      inByte = float(inString);
       print(inByte);
       print("  -  ");
       valor = map(inByte, valMin, valMax, 0, height);
